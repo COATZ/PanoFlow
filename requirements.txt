@@ -4,7 +4,6 @@ cvbase==0.5.5
 idna==3.3
 numpy==1.22.3
 opencv-python==4.6.0.66
--e git+ssh://git@github.com/COATZ/PanoFlow.git@92e560776de5ca0fca565cc60e1ac4e2a336ee76#egg=opticalflow
 Pillow==9.0.1
 PyYAML==6.0
 requests==2.27.1
