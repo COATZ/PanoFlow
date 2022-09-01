@@ -1,0 +1,8 @@
+LICENSE
+README.md
+setup.cfg
+setup.py
+opticalflow.egg-info/PKG-INFO
+opticalflow.egg-info/SOURCES.txt
+opticalflow.egg-info/dependency_links.txt
+opticalflow.egg-info/top_level.txt

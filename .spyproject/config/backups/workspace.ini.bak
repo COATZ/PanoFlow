@@ -1,0 +1,12 @@
+[workspace]
+restore_data_on_startup = True
+save_data_on_exit = True
+save_history = True
+save_non_project_files = False
+project_type = 'empty-project-type'
+recent_files = ['tools/eval_v2.py', 'opticalflow/core/model/panoflow_csflow_sphe.py', 'opticalflow/core/model/external/panoflow_csflow_sphe.py', 'opticalflow/core/model/external/raft_sphe.py', 'opticalflow/core/model/external/csflow.py', 'opticalflow/api/init_model.py', 'opticalflow/core/model/external/DeformConv2d_sphe.py', 'opticalflow/dataset/omni.py', 'opticalflow/dataset/base_flow.py', 'opticalflow/utils/augmentor.py', 'opticalflow/core/model/raft_sphe.py', 'opticalflow/core/model/external/panoflow_raft.py', 'opticalflow/api/evaluate.py']
+
+[main]
+version = 0.2.0
+recent_files = []
+

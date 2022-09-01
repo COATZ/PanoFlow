@@ -1,0 +1,55 @@
+python ./tools/eval.py --model "PanoFlow(CSFlow)" --restore_ckpt ./ckpt/PanoFlow\(CSFlow\)-wo-CFE.pth --CFE --validation Omni --val_Omni_root /media/cartizzu/DATA/DATASETS/OMNIFLOWNET_DATASET/
+Parameter Count: 5633680
+/media/cartizzu/DATA/LIN/2_CODE/2_OPTICAL_FLOW/PanoFlow/PANOFLOW_ENV/lib/python3.9/site-packages/torch/functional.py:568: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2228.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Validation Omni (CartoonTree) EPE: 2.019323
+Validation Omni (Forest) EPE: 3.513562
+Validation Omni (LowPolyModels) EPE: 4.482317
+Validation Omni (all) EPE: 3.338390
+
+
+
+
+python ./tools/eval.py --model "PanoFlow(CSFlow)_sphe" --restore_ckpt ./ckpt/PanoFlow\(CSFlow\)-wo-CFE.pth --CFE --validation Omni --val_Omni_root /media/cartizzu/DATA/DATASETS/OMNIFLOWNET_DATASET/
+Parameter Count: 5633680
+python3 opticalflow/core/model/external/create_offset_tensor.py --w 768 --h 384 --k 7 --s 2 --p 3 --d 1
+Loading offset file:  ./OFFSETS/offset_384_192_7_7_2_2_1.pt
+OFFSET Shape  torch.Size([1, 98, 192, 384])
+python3 opticalflow/core/model/external/create_offset_tensor.py --w 768 --h 384 --k 7 --s 2 --p 3 --d 1
+Loading offset file:  ./OFFSETS/offset_384_192_7_7_2_2_1.pt
+OFFSET Shape  torch.Size([1, 98, 192, 384])
+/media/cartizzu/DATA/LIN/2_CODE/2_OPTICAL_FLOW/PanoFlow/PANOFLOW_ENV/lib/python3.9/site-packages/torch/functional.py:568: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2228.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Validation Omni (CartoonTree) EPE: 2.035381
+Validation Omni (Forest) EPE: 3.709389
+Validation Omni (LowPolyModels) EPE: 4.368668
+Validation Omni (all) EPE: 3.371147
+
+
+
+
+python ./tools/eval_v2.py --model "RAFT" --restore_ckpt ./ckpt/raft-things.pth --CFE --validation Omni --val_Omni_root /media/cartizzu/DATA/DATASETS/OMNIFLOWNET_DATASET/
+Parameter Count: 5257536
+/media/cartizzu/DATA/LIN/2_CODE/2_OPTICAL_FLOW/PanoFlow/PANOFLOW_ENV/lib/python3.9/site-packages/torch/functional.py:568: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2228.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Validation Omni (CartoonTree) EPE: 3.844292
+Validation Omni (Forest) EPE: 5.024900
+Validation Omni (LowPolyModels) EPE: 6.694230
+Validation Omni (all) EPE: 5.187788
+
+
+python ./tools/eval_v2.py --model "RAFT" --restore_ckpt ./ckpt/raft-sintel.pth --CFE --validation Omni --val_Omni_root /media/cartizzu/DATA/DATASETS/OMNIFLOWNET_DATASET/
+Parameter Count: 5257536
+/media/cartizzu/DATA/LIN/2_CODE/2_OPTICAL_FLOW/PanoFlow/PANOFLOW_ENV/lib/python3.9/site-packages/torch/functional.py:568: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2228.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Validation Omni (CartoonTree) EPE: 3.187031
+Validation Omni (Forest) EPE: 4.434010
+Validation Omni (LowPolyModels) EPE: 5.793107
+Validation Omni (all) EPE: 4.471377
+
+
+
+
+
+
+

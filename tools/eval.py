@@ -10,7 +10,7 @@ def parse_args():
         '--model',
         help='The model use to inference',
         default='CSFlow',
-        choices=['CSFlow', 'RAFT', 'PanoFlow(CSFlow)', 'PanoFlow(RAFT)'])
+        choices=['CSFlow', 'RAFT', 'PanoFlow(CSFlow)', 'PanoFlow(CSFlow)_sphe', 'PanoFlow(RAFT)'])
     parser.add_argument(
         '--CFE',
         help='inference under CFE framework, details in paper',

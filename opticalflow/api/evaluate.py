@@ -5,6 +5,7 @@ import opticalflow.dataset as dataset
 from opticalflow.utils.utils import InputPadder
 from opticalflow.utils.flow_utils import convert_360_gt
 
+
 class Evaluator():
 
     def __init__(self, data_size: int = None):
@@ -92,6 +93,25 @@ def validate_chairs(model, data_root, gpus=[0]):
     return {'chairs': epe}
 
 
+def angularError(flow1, flow2):
+    f1_x = flow1[0, :]
+    f1_y = flow1[1, :]
+
+    f2_x = flow2[0, :]
+    f2_y = flow2[1, :]
+
+    top = 1.0 + f1_x*f2_x + f1_y*f2_y
+    bottom = np.sqrt(1.0 + f1_x*f1_x + f1_y*f1_y)*np.sqrt(1.0 + f2_x*f2_x + f2_y*f2_y)
+    
+    # print(top)
+    # print(bottom)
+    # print(max(top), min(top), max(bottom), min(bottom))
+    
+    ae = np.rad2deg(np.arccos(top / (bottom)))
+    # print(ae)
+    return ae
+
+
 @torch.no_grad()
 def validate_omni(model, data_root, gpus=[0]):
     """Peform validation using the OmniDataset"""
@@ -124,14 +144,13 @@ def validate_omni(model, data_root, gpus=[0]):
         epe_all = np.concatenate(epe_list)
         epe = np.mean(epe_all)
 
-        print('Validation Omni (%s) EPE: %f' %
-              (dstype, epe))
-        results[dstype] = np.mean(epe_list)
+        print("Validation Omni {} EPE : {}".format(dstype, epe))
+        results[dstype] = epe
 
     epe_final_all = np.concatenate(epe_any)
     epe_final = np.mean(epe_final_all)
-    print('Validation Omni (all) EPE: %f' %
-          (epe_final))
+    print("Validation Omni (all) EPE : {}".format(epe_final))
+    results['final'] = epe_final
 
     return results
 
@@ -142,10 +161,12 @@ def validate_omni_cfe(model, data_root, cvt_gt=False, gpus=[0]):
     model.eval()
     results = {}
     epe_any = []
+    # ae_any = []
 
     for dstype in ['CartoonTree', 'Forest', 'LowPolyModels']:
         val_dataset = dataset.OmniDataset(root=data_root, dstype=dstype)
         epe_list = []
+        # ae_list = []
 
         for val_id in range(len(val_dataset)):
             image1, image2, flow_gt, _ = val_dataset[val_id]
@@ -216,18 +237,36 @@ def validate_omni_cfe(model, data_root, cvt_gt=False, gpus=[0]):
             epe = torch.sum((flow - flow_gt)**2, dim=0).sqrt()
             epe_list.append(epe.view(-1).numpy())
 
+            # ae = angularError(flow, flow_gt)
+            # ae_list.append(ae.view(-1).numpy())
+
+            # import pdb
+            # pdb.set_trace()
+
         epe_any.append(epe_list)
         epe_all = np.concatenate(epe_list)
         epe = np.mean(epe_all)
-        print('Validation Omni (%s) EPE: %f' %
-              (dstype, epe))
-        dstype = 'Flow360' + dstype
-        results[dstype] = np.mean(epe_list)
+
+        print("Validation Omni {} EPE : {}".format(dstype, epe))
+        # save_file.write("Validation Omni {} EPE : {}".format(dstype, epe))
+
+        # ae_any.append(ae_list)
+        # ae_all = np.concatenate(ae_list)
+        # ae = np.mean(ae_all)
+        # print("Validation Omni {} EPE : {} AE : {}".format(dstype, epe, ae))
+
+        # dstype = 'Flow360' + dstype
+        results[dstype] = epe
 
     epe_final_all = np.concatenate(epe_any)
     epe_final = np.mean(epe_final_all)
-    print('Validation Omni (all) EPE: %f' %
-          (epe_final))
+    print("Validation Omni (all) EPE : {}".format(epe_final))
+    # save_file.write("Validation Omni (all) EPE : {}".format(epe_final))
+    results['final'] = epe_final
+
+    # ae_final_all = np.concatenate(ae_any)
+    # ae_final = np.mean(ae_final_all)
+    # print('Validation Omni (all) EPE : {} AE : {}'.format(epe_final, ae_final))
 
     return results
 
@@ -265,15 +304,13 @@ def validate_flow360(model, data_root, gpus=[0]):
         epe_all = np.concatenate(epe_list)
         epe = np.mean(epe_all)
 
-        print('Validation FLow360 (%s) EPE: %f' %
-              (dstype, epe))
-        dstype = 'Flow360' + dstype
-        results[dstype] = np.mean(epe_list)
+        print("Validation Flow360 {} EPE : {}".format(dstype, epe))
+        results[dstype] = epe
 
-    epe_final_all = np.concatenate(epe_any)
-    epe_final = np.mean(epe_final_all)
-    print('Validation FLow360 (all) EPE: %f' %
-          (epe_final))
+    # epe_final_all = np.concatenate(epe_any)
+    # epe_final = np.mean(epe_final_all)
+    # print("Validation Flow360 (all) EPE : {}".format(epe_final))
+    # results['final'] = epe_final
 
     return results
 
@@ -362,15 +399,14 @@ def validate_flow360_cfe(model, data_root, cvt_gt=False, gpus=[0]):
         epe_any.append(epe_list)
         epe_all = np.concatenate(epe_list)
         epe = np.mean(epe_all)
-        print('Validation FLow360 (%s) EPE: %f' %
-              (dstype, epe))
-        dstype = 'Flow360' + dstype
-        results[dstype] = np.mean(epe_list)
 
-    epe_final_all = np.concatenate(epe_any)
-    epe_final = np.mean(epe_final_all)
-    print('Validation FLow360 (all) EPE: %f' %
-          (epe_final))
+        print("Validation Flow360 {} EPE : {}".format(dstype, epe))
+        results[dstype] = epe
+
+    # epe_final_all = np.concatenate(epe_any)
+    # epe_final = np.mean(epe_final_all)
+    # print("Validation Flow360 (all) EPE : {}".format(epe_final))
+    # results['final'] = epe_final
 
     return results
 
@@ -442,15 +478,14 @@ def validate_flow360_cfe_double_estimate(model, data_root, gpus=[0]):
         epe_any.append(epe_list)
         epe_all = np.concatenate(epe_list)
         epe = np.mean(epe_all)
-        print('Validation FLow360 (%s) EPE: %f' %
-              (dstype, epe))
-        dstype = 'Flow360' + dstype
-        results[dstype] = np.mean(epe_list)
 
-    epe_final_all = np.concatenate(epe_any)
-    epe_final = np.mean(epe_final_all)
-    print('Validation FLow360 (all) EPE: %f' %
-          (epe_final))
+        print("Validation Flow360 {} EPE : {}".format(dstype, epe))
+        results[dstype] = epe
+
+    # epe_final_all = np.concatenate(epe_any)
+    # epe_final = np.mean(epe_final_all)
+    # print("Validation Flow360 (all) EPE : {}".format(epe_final))
+    # results['final'] = epe_final
 
     return results
 
@@ -537,12 +572,10 @@ def validate_flow360_cfe_same_padding(model, data_root, gpus=[0]):
         epe_any.append(epe_list)
         epe_all = np.concatenate(epe_list)
         epe = np.mean(epe_all)
-        print('Validation FLow360 (%s) EPE: %f' %
-              (dstype, epe))
-        dstype = 'Flow360' + dstype
-        results[dstype] = np.mean(epe_list)
+        print("Validation Flow360 {} EPE : {}".format(dstype, epe))
+        results[dstype] = epe
 
-    epe_final_all = np.concatenate(epe_any)
-    epe_final = np.mean(epe_final_all)
-    print('Validation FLow360 (all) EPE: %f' %
-          (epe_final))
+    # epe_final_all = np.concatenate(epe_any)
+    # epe_final = np.mean(epe_final_all)
+    # print("Validation Flow360 (all) EPE : {}".format(epe_final))
+    # results['final'] = epe_final

@@ -1,0 +1,10 @@
+python ./tools/eval.py --model "PanoFlow(CSFlow)" --restore_ckpt ./ckpt/PanoFlow\(CSFlow\)-wo-CFE.pth --CFE --validation Flow360 --val_Flow360_root /media/cartizzu/DATA/DATASETS/Flow360_release/
+Parameter Count: 5633680
+/media/cartizzu/DATA/LIN/2_CODE/2_OPTICAL_FLOW/PanoFlow/PANOFLOW_ENV/lib/python3.9/site-packages/torch/functional.py:568: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2228.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Validation FLow360 (cloud) EPE: 1.472560
+Validation FLow360 (fog) EPE: 3.553380
+Validation FLow360 (rain) EPE: 3.938834
+Validation FLow360 (sunny) EPE: 3.569358
+Validation FLow360 (all) EPE: 3.320306
+

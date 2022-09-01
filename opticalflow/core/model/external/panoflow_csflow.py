@@ -399,6 +399,7 @@ class BasicEncoder(nn.Module):
             self.conv_offset.weight.data.zero_()
             self.conv_offset.bias.data.zero_()
             self.dconv = DeformConv2d(3, 64, kernel_size=7, stride=2, padding=3)
+
         else:
             self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3)
         self.relu1 = nn.ReLU(inplace=True)

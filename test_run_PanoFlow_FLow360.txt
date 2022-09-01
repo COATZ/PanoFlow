@@ -1,0 +1,22 @@
+python ./tools/eval_v2.py --model "RAFT" --restore_ckpt ./ckpt/raft-things.pth --CFE --validation Flow360 --val_Flow360_root /media/cartizzu/DATA/DATASETS/Flow360_release/
+Parameter Count: 5257536
+/media/cartizzu/DATA/LIN/2_CODE/2_OPTICAL_FLOW/PanoFlow/PANOFLOW_ENV/lib/python3.9/site-packages/torch/functional.py:568: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2228.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Validation FLow360 (cloud) EPE: 10.841311
+Validation FLow360 (fog) EPE: 13.323962
+Validation FLow360 (rain) EPE: 14.377381
+Validation FLow360 (sunny) EPE: 14.666275
+Validation FLow360 (all) EPE: 13.886758
+
+
+python ./tools/eval_v2.py --model "RAFT" --restore_ckpt ./ckpt/raft-sintel.pth --CFE --validation Flow360 --val_Flow360_root /media/cartizzu/DATA/DATASETS/Flow360_release/
+Parameter Count: 5257536
+/media/cartizzu/DATA/LIN/2_CODE/2_OPTICAL_FLOW/PanoFlow/PANOFLOW_ENV/lib/python3.9/site-packages/torch/functional.py:568: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2228.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Validation FLow360 (cloud) EPE: 10.205491
+Validation FLow360 (fog) EPE: 12.681679
+Validation FLow360 (rain) EPE: 12.328391
+
+Validation FLow360 (sunny) EPE: 13.845961
+Validation FLow360 (all) EPE: 12.942760
+
